@@ -1,8 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
+	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
+	kafkaApp "github.com/edsonboldrini/imersao-fsfc2-simulator/app/kafka"
 	"github.com/edsonboldrini/imersao-fsfc2-simulator/infra/kafka"
 	"github.com/joho/godotenv"
 )
@@ -15,12 +18,21 @@ func init() {
 }
 
 func main() {
-	producer := kafka.NewKafkaProducer()
-	kafka.Publish("ola", "readtest", producer)
+	msgChan := make(chan *ckafka.Message)
+	consumer := kafka.NewKafkaConsumer(msgChan)
+	go consumer.Consume()
 
-	for {
-		_ = 1
+	for msg := range msgChan {
+		fmt.Println(string(msg.Value))
+		go kafkaApp.Produce(msg)
 	}
+
+	// producer := kafka.NewKafkaProducer()
+	// kafka.Publish("ola", "readtest", producer)
+
+	// for {
+	// 	_ = 1
+	// }
 
 	// route := routes.Route{
 	// 	ID:       "1",
