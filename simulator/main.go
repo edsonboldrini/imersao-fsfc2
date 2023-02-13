@@ -28,7 +28,7 @@ func main() {
 	}
 
 	// producer := kafka.NewKafkaProducer()
-	// kafka.Publish("ola", "readtest", producer)
+	// kafka.Publish("ola", "route.new-position", producer)
 
 	// for {
 	// 	_ = 1

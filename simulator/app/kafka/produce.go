@@ -11,6 +11,7 @@ import (
 	"github.com/edsonboldrini/imersao-fsfc2-simulator/infra/kafka"
 )
 
+// {"clientId": "1", "routeId": "1"}
 func Produce(msg *ckafka.Message) {
 	producer := kafka.NewKafkaProducer()
 	route := routes.NewRoute()
